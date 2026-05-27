@@ -3,22 +3,17 @@ package com.bookstore.onlinebookstore.repository.impl;
 import com.bookstore.onlinebookstore.exception.DataProcessingException;
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.repository.BookRepository;
-import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@RequiredArgsConstructor
 public class BookRepositoryImpl implements BookRepository {
     private final SessionFactory sessionFactory;
-
-    @Autowired
-    public BookRepositoryImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
 
     @Override
     public Book save(Book book) {
@@ -45,10 +40,8 @@ public class BookRepositoryImpl implements BookRepository {
     @Override
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
-            CriteriaQuery<Book> criteriaQuery = session.getCriteriaBuilder()
-                    .createQuery(Book.class);
-            criteriaQuery.from(Book.class);
-            return session.createQuery(criteriaQuery).getResultList();
+            String query = "SELECT b FROM Book b";
+            return session.createQuery(query, Book.class).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all books.", e);
         }
