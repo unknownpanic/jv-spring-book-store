@@ -1,4 +1,4 @@
-#Tue May 26 23:34:11 EEST 2026
+#Wed May 27 12:00:52 EEST 2026
 /Users/maxima/IdeaProjects/jv-spring-book-store/src/main/java/com/bookstore/onlinebookstore/Application.java=1779827179256
 /Users/maxima/IdeaProjects/jv-spring-book-store/src/main/java/com/bookstore/onlinebookstore/exception/DataProcessingException.java=1779825657910
 /Users/maxima/IdeaProjects/jv-spring-book-store/src/main/java/com/bookstore/onlinebookstore/model/Book.java=1779827641317
@@ -7,5 +7,5 @@
 /Users/maxima/IdeaProjects/jv-spring-book-store/src/main/java/com/bookstore/onlinebookstore/service/BookService.java=1779827321619
 /Users/maxima/IdeaProjects/jv-spring-book-store/src/main/java/com/bookstore/onlinebookstore/service/impl/BookServiceImpl.java=1779827269439
 /Users/maxima/IdeaProjects/jv-spring-book-store/src/main/resources/application.properties=1779827015301
-/Users/maxima/IdeaProjects/jv-spring-book-store/src/test/resources/application.properties=1779826892477
+/Users/maxima/IdeaProjects/jv-spring-book-store/src/test/resources/application.properties=1779872421715
 configuration*?=7E63CBDF71A8CB373BC506124EEF102886D17671
