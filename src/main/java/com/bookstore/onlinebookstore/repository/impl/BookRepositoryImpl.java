@@ -4,10 +4,12 @@ import com.bookstore.onlinebookstore.exception.DataProcessingException;
 import com.bookstore.onlinebookstore.model.Book;
 import com.bookstore.onlinebookstore.repository.BookRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -38,12 +40,24 @@ public class BookRepositoryImpl implements BookRepository {
     }
 
     @Override
+    public Optional<Book> findById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            String query = "SELECT b FROM Book b WHERE id = :id";
+            Query<Book> bookQuery = session.createQuery(query, Book.class);
+            bookQuery.setParameter("id", id);
+            return bookQuery.uniqueResultOptional();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find book with id: " + id, e);
+        }
+    }
+
+    @Override
     public List<Book> findAll() {
         try (Session session = sessionFactory.openSession()) {
             String query = "SELECT b FROM Book b";
             return session.createQuery(query, Book.class).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get all books.", e);
+            throw new DataProcessingException("Can't find all books.", e);
         }
     }
 }
