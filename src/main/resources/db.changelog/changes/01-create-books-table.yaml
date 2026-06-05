@@ -44,3 +44,5 @@ databaseChangeLog:
                   name: is_deleted
                   type: bit(1)
                   defaultValueBoolean: false
+                  constraints:
+                    nullable: false

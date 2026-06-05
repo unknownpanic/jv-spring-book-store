@@ -32,5 +32,6 @@ public class Book {
     private BigDecimal price;
     private String description;
     private String coverImage;
-    private Boolean isDeleted = false;
+    @Column(nullable = false)
+    private boolean isDeleted;
 }
