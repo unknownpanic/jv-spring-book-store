@@ -10,6 +10,7 @@ import com.bookstore.onlinebookstore.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +32,24 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public BookDto createBook(CreateBookRequestDto bookDto) {
         Book bookModel = bookMapper.toModel(bookDto);
         return bookMapper.toDto(bookRepository.save(bookModel));
+    }
+
+    @Override
+    @Transactional
+    public BookDto updateBookById(Long id, CreateBookRequestDto bookDto) {
+        Book existingBook = bookRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can't find book with id: " + id));
+        bookMapper.updateBook(existingBook, bookDto);
+        return bookMapper.toDto(bookRepository.save(existingBook));
+    }
+
+    @Override
+    @Transactional
+    public void deleteBookById(Long id) {
+        bookRepository.deleteById(id);
     }
 }
