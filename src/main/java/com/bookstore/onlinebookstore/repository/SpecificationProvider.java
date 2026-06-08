@@ -1,16 +1,16 @@
 package com.bookstore.onlinebookstore.repository;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
-import java.util.Arrays;
+import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 public interface SpecificationProvider<T> {
     String getAttribute();
 
-    default Specification<T> getSpecification(String[] params) {
+    default Specification<T> getSpecification(List<String> params) {
         return (root, query, criteriaBuilder) -> {
             CriteriaBuilder.In<String> inPredicate = criteriaBuilder.in(root.get(getAttribute()));
-            Arrays.asList(params).forEach(inPredicate::value);
+            params.forEach(inPredicate::value);
             return criteriaBuilder.and(inPredicate);
         };
     }

@@ -18,7 +18,7 @@ public class BookSpecificationBuilder
     public Specification<Book> build(BookSearchParametersDto searchParameters) {
         Specification<Book> customSpecification = Specification.unrestricted();
 
-        if (searchParameters.getAuthors() != null && searchParameters.getAuthors().length > 0) {
+        if (!searchParameters.getAuthors().isEmpty()) {
             customSpecification = customSpecification.and(specificationProviderManager
                     .getSpecificationProviderByAttribute("author")
                             .getSpecification(searchParameters.getAuthors()));
