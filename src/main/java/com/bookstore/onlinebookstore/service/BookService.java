@@ -3,9 +3,9 @@ package com.bookstore.onlinebookstore.service;
 import com.bookstore.onlinebookstore.model.dto.BookDto;
 import com.bookstore.onlinebookstore.model.dto.BookSearchParametersDto;
 import com.bookstore.onlinebookstore.model.dto.CreateBookRequestDto;
+import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
 
 public interface BookService {
     Page<BookDto> getAll(Pageable pageable);
