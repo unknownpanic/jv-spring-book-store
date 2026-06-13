@@ -1,4 +1,4 @@
-package com.bookstore.onlinebookstore.model.dto;
+package com.bookstore.onlinebookstore.model.dto.book;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.ArrayList;
