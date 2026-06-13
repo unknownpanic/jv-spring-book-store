@@ -12,7 +12,7 @@ public class UserRegistrationRequestDto {
     @NotBlank
     private String password;
     @NotBlank
-    private String repeatedPassword;
+    private String repeatPassword;
     @NotBlank
     private String firstName;
     @NotBlank

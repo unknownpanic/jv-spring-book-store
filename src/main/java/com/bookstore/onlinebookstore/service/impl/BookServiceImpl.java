@@ -3,7 +3,7 @@ package com.bookstore.onlinebookstore.service.impl;
 import com.bookstore.onlinebookstore.exception.EntityNotFoundException;
 import com.bookstore.onlinebookstore.mapper.BookMapper;
 import com.bookstore.onlinebookstore.model.Book;
-import com.bookstore.onlinebookstore.model.dto.book.BookDto;
+import com.bookstore.onlinebookstore.model.dto.book.BookResponseDto;
 import com.bookstore.onlinebookstore.model.dto.book.BookSearchParametersDto;
 import com.bookstore.onlinebookstore.model.dto.book.CreateBookRequestDto;
 import com.bookstore.onlinebookstore.repository.book.BookRepository;
@@ -25,19 +25,19 @@ public class BookServiceImpl implements BookService {
     private final BookMapper bookMapper;
 
     @Override
-    public Page<BookDto> getAll(Pageable pageable) {
+    public Page<BookResponseDto> getAll(Pageable pageable) {
         return bookRepository.findAll(pageable)
                 .map(bookMapper::toDto);
     }
 
     @Override
-    public BookDto getBookById(Long id) {
+    public BookResponseDto getBookById(Long id) {
         return bookMapper.toDto(bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Can't find book with id: " + id)));
     }
 
     @Override
-    public List<BookDto> searchBooksByParameters(BookSearchParametersDto bookSearchParametersDto) {
+    public List<BookResponseDto> searchBooksByParameters(BookSearchParametersDto bookSearchParametersDto) {
         Specification<Book> specification = bookSpecificationBuilder.build(bookSearchParametersDto);
         return bookRepository.findAll(specification).stream()
                 .map(bookMapper::toDto)
@@ -46,14 +46,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public BookDto createBook(CreateBookRequestDto bookDto) {
+    public BookResponseDto createBook(CreateBookRequestDto bookDto) {
         Book bookModel = bookMapper.toModel(bookDto);
         return bookMapper.toDto(bookRepository.save(bookModel));
     }
 
     @Override
     @Transactional
-    public BookDto updateBookById(Long id, CreateBookRequestDto bookDto) {
+    public BookResponseDto updateBookById(Long id, CreateBookRequestDto bookDto) {
         Book existingBook = bookRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("Can't find book with id: " + id));
         bookMapper.updateBook(existingBook, bookDto);

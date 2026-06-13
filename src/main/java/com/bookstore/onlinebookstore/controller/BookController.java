@@ -1,6 +1,6 @@
 package com.bookstore.onlinebookstore.controller;
 
-import com.bookstore.onlinebookstore.model.dto.book.BookDto;
+import com.bookstore.onlinebookstore.model.dto.book.BookResponseDto;
 import com.bookstore.onlinebookstore.model.dto.book.BookSearchParametersDto;
 import com.bookstore.onlinebookstore.model.dto.book.CreateBookRequestDto;
 import com.bookstore.onlinebookstore.service.BookService;
@@ -41,7 +41,7 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Books retrieved successfully")
     })
     @GetMapping
-    public Page<BookDto> getAll(
+    public Page<BookResponseDto> getAll(
             @Parameter(description = "Pagination and sorting parameters")
             @PageableDefault(size = 15, sort = "title") Pageable pageable
     ) {
@@ -57,7 +57,7 @@ public class BookController {
             @ApiResponse(responseCode = "404", description = "Book not found")
     })
     @GetMapping("/{id}")
-    public BookDto getBookById(
+    public BookResponseDto getBookById(
             @Parameter(description = "Book ID", example = "1")
             @PathVariable Long id
     ) {
@@ -72,7 +72,7 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Search completed successfully")
     })
     @GetMapping("/search")
-    public List<BookDto> searchBooks(
+    public List<BookResponseDto> searchBooks(
             @Parameter(description = "Search parameters")
             BookSearchParametersDto searchParametersDto
     ) {
@@ -95,7 +95,7 @@ public class BookController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDto createBook(@RequestBody @Valid CreateBookRequestDto createBookRequestDto) {
+    public BookResponseDto createBook(@RequestBody @Valid CreateBookRequestDto createBookRequestDto) {
         return bookService.createBook(createBookRequestDto);
     }
 
@@ -109,7 +109,7 @@ public class BookController {
             @ApiResponse(responseCode = "404", description = "Book not found")
     })
     @PutMapping("/{id}")
-    public BookDto updateBookById(
+    public BookResponseDto updateBookById(
             @Parameter(description = "Book ID", example = "1")
             @PathVariable Long id,
             @RequestBody @Valid CreateBookRequestDto createBookRequestDto

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Schema(description = "Book response object")
-public class BookDto {
+public class BookResponseDto {
     @Schema(description = "Unique book identifier", example = "1")
     private Long id;
 

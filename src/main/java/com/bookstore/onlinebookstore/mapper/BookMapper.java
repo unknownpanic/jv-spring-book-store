@@ -2,7 +2,7 @@ package com.bookstore.onlinebookstore.mapper;
 
 import com.bookstore.onlinebookstore.config.MapperConfig;
 import com.bookstore.onlinebookstore.model.Book;
-import com.bookstore.onlinebookstore.model.dto.book.BookDto;
+import com.bookstore.onlinebookstore.model.dto.book.BookResponseDto;
 import com.bookstore.onlinebookstore.model.dto.book.CreateBookRequestDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,9 +14,9 @@ public interface BookMapper {
     Book toModel(CreateBookRequestDto bookDto);
 
     @Mapping(target = "id", ignore = true)
-    Book toModel(BookDto bookDto);
+    Book toModel(BookResponseDto bookResponseDto);
 
-    BookDto toDto(Book book);
+    BookResponseDto toDto(Book book);
 
     @Mapping(target = "id", ignore = true)
     void updateBook(@MappingTarget Book existingBook, CreateBookRequestDto bookDto);
