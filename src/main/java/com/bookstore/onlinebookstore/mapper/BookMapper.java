@@ -13,9 +13,6 @@ public interface BookMapper {
     @Mapping(target = "id", ignore = true)
     Book toModel(CreateBookRequestDto bookDto);
 
-    @Mapping(target = "id", ignore = true)
-    Book toModel(BookResponseDto bookResponseDto);
-
     BookResponseDto toDto(Book book);
 
     @Mapping(target = "id", ignore = true)

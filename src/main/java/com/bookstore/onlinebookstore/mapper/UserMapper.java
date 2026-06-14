@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(config = MapperConfig.class)
 public interface UserMapper {
-    UserResponseDto toUserResponse(User user);
+    UserResponseDto toDto(User user);
 
     @Mapping(target = "id", ignore = true)
     User toModel(UserRegistrationRequestDto requestDto);
