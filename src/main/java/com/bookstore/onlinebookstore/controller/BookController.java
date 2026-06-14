@@ -95,8 +95,8 @@ public class BookController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookResponseDto createBook(@RequestBody @Valid CreateBookRequestDto createBookRequestDto) {
-        return bookService.createBook(createBookRequestDto);
+    public BookResponseDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
+        return bookService.createBook(requestDto);
     }
 
     @Operation(
@@ -112,9 +112,9 @@ public class BookController {
     public BookResponseDto updateBookById(
             @Parameter(description = "Book ID", example = "1")
             @PathVariable Long id,
-            @RequestBody @Valid CreateBookRequestDto createBookRequestDto
+            @RequestBody @Valid CreateBookRequestDto requestDto
     ) {
-        return bookService.updateBookById(id, createBookRequestDto);
+        return bookService.updateBookById(id, requestDto);
     }
 
     @Operation(

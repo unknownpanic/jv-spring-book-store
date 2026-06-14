@@ -14,9 +14,9 @@ public interface BookService {
 
     BookResponseDto createBook(CreateBookRequestDto bookDto);
 
-    BookResponseDto updateBookById(Long id, CreateBookRequestDto createBookRequestDto);
+    BookResponseDto updateBookById(Long id, CreateBookRequestDto requestDto);
 
     void deleteBookById(Long id);
 
-    List<BookResponseDto> searchBooksByParameters(BookSearchParametersDto bookSearchParametersDto);
+    List<BookResponseDto> searchBooksByParameters(BookSearchParametersDto searchParametersDto);
 }
