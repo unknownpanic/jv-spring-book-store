@@ -23,14 +23,7 @@ public class UserServiceImpl implements UserService {
         if (userRepository.existsByEmail(email)) {
             throw new RegistrationException("An account already exists with this email: " + email);
         }
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(requestDto.getPassword());
-        user.setFirstName(requestDto.getFirstName());
-        user.setLastName(requestDto.getLastName());
-        if (requestDto.getShippingAddress() != null) {
-            user.setShippingAddress(requestDto.getShippingAddress());
-        }
+        User user = userMapper.toModel(requestDto);
         User savedUser = userRepository.save(user);
         return userMapper.toDto(savedUser);
     }
