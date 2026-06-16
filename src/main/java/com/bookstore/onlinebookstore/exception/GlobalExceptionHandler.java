@@ -2,6 +2,7 @@ package com.bookstore.onlinebookstore.exception;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,16 +26,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(RegistrationException.class)
+    public ResponseEntity<Object> handleRegistrationException(RegistrationException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex) {
 
         Map<String, String> errorReport = new HashMap<>();
-        ex.getBindingResult().getFieldErrors()
-                .forEach(error -> errorReport.put(
-                        error.getField(),
-                        error.getDefaultMessage()
-                ));
+
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errorReport.put(error.getField(), error.getDefaultMessage()));
 
         return ResponseEntity.badRequest().body(errorReport);
     }
