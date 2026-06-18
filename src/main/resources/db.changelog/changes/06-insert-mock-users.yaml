@@ -1,0 +1,72 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-test-users
+      author: maxima
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: user@example.com
+              - column:
+                  name: password
+                  value: $2a$10$bWXwRwFJc6duUPHiUA9psuRMM9Ucv2RSSivVj1FxZzASlAYB3riT6
+              - column:
+                  name: first_name
+                  value: Test
+              - column:
+                  name: last_name
+                  value: User
+              - column:
+                  name: shipping_address
+                  value: 123 Main St, Kyiv, Ukraine
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: admin@example.com
+              - column:
+                  name: password
+                  value: $2a$10$G1g8Bd2CFihCn8g0YB.ng.FwSot1g.40vivl7R7dCivsnMByCafS2
+              - column:
+                  name: first_name
+                  value: Admin
+              - column:
+                  name: last_name
+                  value: User
+              - column:
+                  name: shipping_address
+                  value: 456 Admin Ave, Kyiv, Ukraine
+              - column:
+                  name: is_deleted
+                  valueBoolean: false
+
+  - changeSet:
+      id: assign-user-roles
+      author: maxima
+      changes:
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(SELECT id FROM users WHERE email = 'user@example.com')"
+              - column:
+                  name: role_id
+                  valueComputed: "(SELECT id FROM roles WHERE name = 'USER')"
+
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: "(SELECT id FROM users WHERE email = 'admin@example.com')"
+              - column:
+                  name: role_id
+                  valueComputed: "(SELECT id FROM roles WHERE name = 'ADMIN')"
