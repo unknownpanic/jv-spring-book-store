@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ public class BookController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Books retrieved successfully")
     })
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping
     public Page<BookResponseDto> getAll(
             @Parameter(description = "Pagination and sorting parameters")
@@ -56,6 +58,7 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Book found"),
             @ApiResponse(responseCode = "404", description = "Book not found")
     })
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/{id}")
     public BookResponseDto getBookById(
             @Parameter(description = "Book ID", example = "1")
@@ -71,6 +74,7 @@ public class BookController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Search completed successfully")
     })
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     @GetMapping("/search")
     public List<BookResponseDto> searchBooks(
             @Parameter(description = "Search parameters")
@@ -93,6 +97,7 @@ public class BookController {
                     description = "Invalid request data"
             )
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookResponseDto createBook(@RequestBody @Valid CreateBookRequestDto requestDto) {
@@ -108,6 +113,7 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Invalid request data"),
             @ApiResponse(responseCode = "404", description = "Book not found")
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public BookResponseDto updateBookById(
             @Parameter(description = "Book ID", example = "1")
@@ -125,6 +131,7 @@ public class BookController {
             @ApiResponse(responseCode = "204", description = "Book deleted successfully"),
             @ApiResponse(responseCode = "404", description = "Book not found")
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookById(
