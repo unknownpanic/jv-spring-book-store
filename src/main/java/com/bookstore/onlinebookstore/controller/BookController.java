@@ -36,7 +36,8 @@ public class BookController {
 
     @Operation(
             summary = "Get all books",
-            description = "Returns a paginated list of all available books"
+            description = "Returns a paginated list of all available books. "
+                    + "Available for USER and ADMIN roles"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Books retrieved successfully")
@@ -52,7 +53,7 @@ public class BookController {
 
     @Operation(
             summary = "Get book by ID",
-            description = "Returns a book by its identifier"
+            description = "Returns a book by its identifier. Available for USER and ADMIN roles"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Book found"),
@@ -69,7 +70,7 @@ public class BookController {
 
     @Operation(
             summary = "Search books",
-            description = "Search books using author filter"
+            description = "Search books using author filter. Available for USER and ADMIN roles"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Search completed successfully")
@@ -85,7 +86,7 @@ public class BookController {
 
     @Operation(
             summary = "Create a new book",
-            description = "Creates a new book and returns created entity"
+            description = "Creates a new book and returns created entity. ADMIN role required"
     )
     @ApiResponses({
             @ApiResponse(
@@ -95,6 +96,10 @@ public class BookController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request data"
+            ),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "User with this email already exists"
             )
     })
     @PreAuthorize("hasRole('ADMIN')")
@@ -106,7 +111,7 @@ public class BookController {
 
     @Operation(
             summary = "Update book",
-            description = "Updates an existing book by ID"
+            description = "Updates an existing book by ID.  ADMIN role required"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Book updated successfully"),
@@ -125,7 +130,7 @@ public class BookController {
 
     @Operation(
             summary = "Delete book",
-            description = "Deletes a book by its ID"
+            description = "Deletes a book by its ID. ADMIN role required"
     )
     @ApiResponses({
             @ApiResponse(responseCode = "204", description = "Book deleted successfully"),
