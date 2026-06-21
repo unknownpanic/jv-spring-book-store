@@ -1,8 +1,11 @@
 package com.bookstore.onlinebookstore.controller;
 
 import com.bookstore.onlinebookstore.exception.RegistrationException;
+import com.bookstore.onlinebookstore.model.dto.user.UserLoginRequestDto;
+import com.bookstore.onlinebookstore.model.dto.user.UserLoginResponseDto;
 import com.bookstore.onlinebookstore.model.dto.user.UserRegistrationRequestDto;
 import com.bookstore.onlinebookstore.model.dto.user.UserResponseDto;
+import com.bookstore.onlinebookstore.security.AuthenticationService;
 import com.bookstore.onlinebookstore.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 public class AuthenticationController {
+    private final AuthenticationService authenticationService;
     private final UserService userService;
 
     @Operation(
@@ -39,5 +43,10 @@ public class AuthenticationController {
     public UserResponseDto register(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);
+    }
+
+    @PostMapping("/login")
+    public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
+        return authenticationService.authenticate(requestDto);
     }
 }
