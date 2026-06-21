@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Authentication", description = "Endpoints for user authentication")
+@Tag(
+        name = "Authentication",
+        description = "Endpoints for user registration and authentication"
+)
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
@@ -36,7 +39,11 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "201",
                     description = "User successfully registered"),
             @ApiResponse(responseCode = "400",
-                    description = "Validation failed")
+                    description = "Validation failed"),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "User with this email already exists"
+            )
     })
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
@@ -45,6 +52,24 @@ public class AuthenticationController {
         return userService.register(requestDto);
     }
 
+    @Operation(
+            summary = "Authenticate user",
+            description = "Authenticates a user by email and password and returns a JWT token."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Authentication successful"
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request"
+            ),
+            @ApiResponse(
+                    responseCode = "401",
+                    description = "Invalid email or password"
+            )
+    })
     @PostMapping("/login")
     public UserLoginResponseDto login(@RequestBody @Valid UserLoginRequestDto requestDto) {
         return authenticationService.authenticate(requestDto);
